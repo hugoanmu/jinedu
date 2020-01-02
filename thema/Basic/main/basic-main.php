@@ -10,7 +10,7 @@ $font = 'font-16 en';
 // 게시판 제목 하단라인컬러 설정 - red, blue, green, orangered, black, orange, yellow, navy, violet, deepblue, crimson..
 $line = 'navy';
 
-// 사이드 위치 설정 - left, right
+// 사이드 위치 설정 - left, rightㄴㄴㄴ
 $side = ($at_set['side']) ? 'left' : 'right';
 
 ?>

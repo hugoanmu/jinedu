@@ -1,9 +1,9 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
-define('G5_MYSQL_HOST', 'localhost');
+define('G5_MYSQL_HOST', 'ultra6000.cafe24.com');
 define('G5_MYSQL_USER', 'ultra6000');
 define('G5_MYSQL_PASSWORD', 'wls62628790');
-define('G5_MYSQL_DB', 'jinedu');
+define('G5_MYSQL_DB', 'ultra6000');
 define('G5_MYSQL_SET_MODE', true);
 
 define('G5_TABLE_PREFIX', 'g5_');

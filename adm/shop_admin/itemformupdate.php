@@ -231,7 +231,7 @@ sql_query(" delete from {$g5['g5_shop_item_option_table']} where io_type = '0' a
 $option_count = (isset($_POST['opt_id']) && is_array($_POST['opt_id'])) ? count($_POST['opt_id']) : array();
 if($option_count) {
     // 옵션명
-    $opt1_cnt = $opt2_cnt = $opt3_cnt = 0;
+    $opt1_cnt = $opt2_cnt = $opt3_cnt = $opt4_cnt = 0;
     for($i=0; $i<$option_count; $i++) {
         $_POST['opt_id'][$i] = preg_replace(G5_OPTION_ID_FILTER, '', $_POST['opt_id'][$i]);
 
@@ -242,6 +242,8 @@ if($option_count) {
             $opt2_cnt++;
         if($opt_val[2])
             $opt3_cnt++;
+				if($opt_val[3])
+            $opt4_cnt++;
     }
 
     if($opt1_subject && $opt1_cnt) {
@@ -250,6 +252,8 @@ if($option_count) {
             $it_option_subject .= ','.$opt2_subject;
         if($opt3_subject && $opt3_cnt)
             $it_option_subject .= ','.$opt3_subject;
+				if($opt4_subject && $opt4_cnt)
+            $it_option_subject .= ','.$opt4_subject;
     }
 }
 

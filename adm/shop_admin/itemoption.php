@@ -8,6 +8,7 @@ if($it['it_id']) {
     $opt1_subject = $opt_subject[0];
     $opt2_subject = $opt_subject[1];
     $opt3_subject = $opt_subject[2];
+    $opt4_subject = $opt_subject[3];
 
     $sql = " select * from {$g5['g5_shop_item_option_table']} where io_type = '0' and it_id = '{$it['it_id']}' order by io_no asc ";
     $result = sql_query($sql);
@@ -17,10 +18,12 @@ if($it['it_id']) {
     $opt1_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt1_subject'])));
     $opt2_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt2_subject'])));
     $opt3_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt3_subject'])));
+    $opt4_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt4_subject'])));
 
     $opt1_val = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt1'])));
     $opt2_val = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt2'])));
     $opt3_val = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt3'])));
+    $opt4_val = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt4'])));
 
     if(!$opt1_subject || !$opt1_val) {
         echo '옵션1과 옵션1 항목을 입력해 주십시오.';
@@ -29,7 +32,7 @@ if($it['it_id']) {
 
     $po_run = true;
 
-    $opt1_count = $opt2_count = $opt3_count = 0;
+    $opt1_count = $opt2_count = $opt3_count = $opt4_count = 0;
 
     if($opt1_val) {
         $opt1 = explode(',', $opt1_val);
@@ -44,6 +47,10 @@ if($it['it_id']) {
     if($opt3_val) {
         $opt3 = explode(',', $opt3_val);
         $opt3_count = count($opt3);
+    }
+    if($opt4_val) {
+        $opt4 = explode(',', $opt4_val);
+        $opt4_count = count($opt4);
     }
 }
 
@@ -75,8 +82,10 @@ if($po_run) {
             $opt_1 = $opt_val[0];
             $opt_2 = $opt_val[1];
             $opt_3 = $opt_val[2];
+            $opt_4 = $opt_val[3];
             $opt_2_len = strlen($opt_2);
             $opt_3_len = strlen($opt_3);
+            $opt_4_len = strlen($opt_4);
             $opt_price = $row['io_price'];
             $opt_stock_qty = $row['io_stock_qty'];
             $opt_noti_qty = $row['io_noti_qty'];
@@ -88,7 +97,7 @@ if($po_run) {
             <label for="opt_chk_<?php echo $i; ?>" class="sound_only"></label>
             <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" value="1">
         </td>
-        <td class="opt-cell"><?php echo $opt_1; if ($opt_2_len) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3_len) echo ' <small>&gt;</small> '.$opt_3; ?></td>
+        <td class="opt-cell"><?php echo $opt_1; if ($opt_2_len) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3_len) echo ' <small>&gt;</small> '.$opt_3;  if ($opt_4_len) echo ' <small>&gt;</small> '.$opt_4; ?></td>
         <td class="td_numsmall">
             <label for="opt_price_<?php echo $i; ?>" class="sound_only"></label>
             <input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" id="opt_price_<?php echo $i; ?>" class="frm_input" size="9">
@@ -117,18 +126,24 @@ if($po_run) {
             do {
                 $k = 0;
                 do {
+	        $l = 0;
+	        do {
                     $opt_1 = strip_tags(trim($opt1[$i]));
                     $opt_2 = strip_tags(trim($opt2[$j]));
                     $opt_3 = strip_tags(trim($opt3[$k]));
+                    $opt_4 = strip_tags(trim($opt4[$l]));
 
                     $opt_2_len = strlen($opt_2);
                     $opt_3_len = strlen($opt_3);
+                    $opt_4_len = strlen($opt_4);
 
                     $opt_id = $opt_1;
                     if($opt_2_len)
                         $opt_id .= chr(30).$opt_2;
                     if($opt_3_len)
                         $opt_id .= chr(30).$opt_3;
+                    if($opt_4_len)
+                        $opt_id .= chr(30).$opt_4;
                     $opt_price = 0;
                     $opt_stock_qty = 9999;
                     $opt_noti_qty = 100;
@@ -157,7 +172,7 @@ if($po_run) {
             <label for="opt_chk_<?php echo $i; ?>" class="sound_only"></label>
             <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" value="1">
         </td>
-        <td class="opt1-cell"><?php echo $opt_1; if ($opt_2_len) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3_len) echo ' <small>&gt;</small> '.$opt_3; ?></td>
+        <td class="opt1-cell"><?php echo $opt_1; if ($opt_2_len) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3_len) echo ' <small>&gt;</small> '.$opt_3; if ($opt_4_len) echo ' <small>&gt;</small> '.$opt_4; ?></td>
         <td class="td_numsmall">
             <label for="opt_price_<?php echo $i; ?>" class="sound_only"></label>
             <input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" id="opt_price_<?php echo $i; ?>" class="frm_input" size="9">
@@ -179,6 +194,9 @@ if($po_run) {
         </td>
     </tr>
     <?php
+											$l++;
+		                } while($l < $opt4_count);
+
                     $k++;
                 } while($k < $opt3_count);
 
